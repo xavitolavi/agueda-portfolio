@@ -43,6 +43,7 @@ export default {
           this.selectedProject = null;
 
           this.sectionProjects = this.projects.filter(project => {
+            console.log(project.type, this.selectedSection);
               return project.type === this.selectedSection;
           })
       },
@@ -61,7 +62,7 @@ export default {
 
       setAllProjects() {
           let illustrations = require.context(
-              '@/assets/0_home',
+              '@/assets/images_lower',
               true,
               /^.*\.png$/
           )
@@ -78,6 +79,8 @@ export default {
                   img: project
               }
           })
+
+          console.log(this.projects);
       }
   }
 }

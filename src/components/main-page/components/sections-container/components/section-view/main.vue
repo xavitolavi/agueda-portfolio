@@ -47,7 +47,6 @@ import CurrentSection from './components/section/main.vue';
 
         computed: {
             getButtonText() {
-                console.log(this.selectedSection, this.selectedProject);
                 if (this.selectedSection && this.selectedProject) {
                     return "Back";
                 }

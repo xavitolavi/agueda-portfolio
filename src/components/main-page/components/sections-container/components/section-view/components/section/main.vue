@@ -13,7 +13,7 @@
             <img 
                 v-for="(project, index) in sectionProjects"
                 :key="'section_project_' + index"
-                :src="require('@/assets/0_home/' + project.img)"
+                :src="require('@/assets/images_lower/' + project.img)"
                 :alt="'section_project_' + index"
                 @click="$emit('project-select', project)"
             >

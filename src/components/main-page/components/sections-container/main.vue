@@ -3,7 +3,7 @@
         <section-selector 
             @section-select="$emit('section-select', $event)"
             :selected-section="selectedSection"
-            />
+        />
         <section-view 
             v-if="selectedSection"
             @section-select="$emit('section-select', $event)"
