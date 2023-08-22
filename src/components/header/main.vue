@@ -1,86 +1,83 @@
 <template>
-    <div class="header-container">
-        <div class="top">
-            <div class="header-logo" @click="$emit('select-section', null)">
-                <svg width="41" height="50" viewBox="0 0 41 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M38.836 49.708C38.308 49.708 37.864 49.528 37.504 49.168C37.168 48.808 37 48.364 37 47.836C37 47.308 37.168 46.876 37.504 46.54C37.864 46.18 38.308 46 38.836 46C39.34 46 39.76 46.18 40.096 46.54C40.456 46.876 40.636 47.308 40.636 47.836C40.636 48.364 40.456 48.808 40.096 49.168C39.76 49.528 39.34 49.708 38.836 49.708Z" fill="black"/>
-                    <path d="M12.6141 29.5621L11.2436 33.3178L11.1652 33.5324L22.0805 33.5333L20.6414 29.5621H12.6141Z" fill="black"/>
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M5.25087 49.7352C5.25087 49.7352 7.11769 44.6668 8.31387 41.4192C8.86924 39.8687 9.18061 38.9994 9.73598 37.449C10.2941 35.9195 11.1652 33.5324 11.1652 33.5324L11.2436 33.3178L12.6141 29.5621L16.6277 18.5635L20.6414 29.5621L22.0805 33.5333L23.5195 37.449L24.9416 41.4192L28.0046 49.7352H33.2555L19.5267 12.5545H13.7835L0 49.7352H5.25087ZM21.988 10.3548V6.70648L10.3376 0V4.23849L21.988 10.3548Z" fill="black"/>
-                </svg>
-            </div>
-            <div class="header-buttons">
-                <header-buttons 
-                    v-for="(button, index) in buttons"
-                    :key="'btn' + index"
-                    :text="button.text"
-                />
-            </div>
-        </div>
-        <div class="bottom">
-            <div class="description">
-                Hi! My name is <span>Agueda Gol.</span> I'm an <span>illustrator,<br> UX-UI designer, and video editor,
-                </span> based in<br> <span>Spain,</span> and this is my portfolio <span>website! :)</span>
-            </div>
-        </div>
+  <div class="header-container">
+    <div class="header-logo" @click="$emit('select-section', null)">
+      <svg width="41" height="50" viewBox="0 0 41 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M38.836 49.708C38.308 49.708 37.864 49.528 37.504 49.168C37.168 48.808 37 48.364 37 47.836C37 47.308 37.168 46.876 37.504 46.54C37.864 46.18 38.308 46 38.836 46C39.34 46 39.76 46.18 40.096 46.54C40.456 46.876 40.636 47.308 40.636 47.836C40.636 48.364 40.456 48.808 40.096 49.168C39.76 49.528 39.34 49.708 38.836 49.708Z"
+          fill="black" />
+        <path d="M12.6141 29.5621L11.2436 33.3178L11.1652 33.5324L22.0805 33.5333L20.6414 29.5621H12.6141Z"
+          fill="black" />
+        <path fill-rule="evenodd" clip-rule="evenodd"
+          d="M5.25087 49.7352C5.25087 49.7352 7.11769 44.6668 8.31387 41.4192C8.86924 39.8687 9.18061 38.9994 9.73598 37.449C10.2941 35.9195 11.1652 33.5324 11.1652 33.5324L11.2436 33.3178L12.6141 29.5621L16.6277 18.5635L20.6414 29.5621L22.0805 33.5333L23.5195 37.449L24.9416 41.4192L28.0046 49.7352H33.2555L19.5267 12.5545H13.7835L0 49.7352H5.25087ZM21.988 10.3548V6.70648L10.3376 0V4.23849L21.988 10.3548Z"
+          fill="black" />
+      </svg>
     </div>
+    <div class="header-buttons">
+      <header-buttons 
+        v-for="(button, index) in buttons" 
+        :key="'btn' + index" :text="button.text" 
+        :action="button.action"
+        :selected-cv="selectedCv"
+        @select-cv="$emit('select-cv', $event)" />
+    </div>
+  </div>
 </template>
 
 <script>
-import HeaderButtons from '@/components/buttons/main.vue';
+import HeaderButtons from './buttons/main.vue';
 
 export default {
 
-    name: 'PortfolioHeader',
+  name: 'PortfolioHeader',
 
-    components: {
-        HeaderButtons
-    },
+  components: {
+    HeaderButtons
+  },
 
-    data() {
-        return {
-            buttons: [{
-                text: 'cv',
-                action: 'open-cv'
-            }, {
-                text: 'contact',
-                action: 'open-email',
-            }]
-        }
-    },
+  props: {
+    selectedCv: {
+        type: Boolean,
+        default: false
+    }
+  },
+
+  data() {
+    return {
+      buttons: [{
+        text: 'cv',
+        action: 'select-cv'
+      }, {
+        text: 'contact',
+        action: 'open-email',
+      }]
+    }
+  },
 }
 
 </script>
 
 <style lang="less">
 .header-container {
-    .top {
-        display: flex;
-        justify-content: space-between;
-        padding: 20px 60px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 20px;
+  background: white;
+  z-index: 20;
+  height: 80px;
 
-        .header-logo {
-            cursor: pointer;
-        }
+  .header-logo {
+    cursor: pointer;
+    padding-left: 60px;
+  }
 
-        .header-buttons {
-            display: flex;
-            flex-direction: row;
-            height: fit-content;
-        }
-    }
-
-    .bottom {
-        margin-top: 40px;
-        
-        .description {
-            margin-left: 60px;
-            text-align: justify;
-            color: rgba(0,0,0, .5);
-
-            span {
-                color: #000000;
-            }
-        }
-    }
-} 
+  .header-buttons {
+    display: flex;
+    flex-direction: row;
+    height: fit-content;
+    padding-right: 60px;
+  }
+}
 </style>

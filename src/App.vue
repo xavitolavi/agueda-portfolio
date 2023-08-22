@@ -1,27 +1,41 @@
 <template>
-  <Header 
-    @select-section="selectSection"
-  />
-  <MainPage 
-    @section-select="selectSection"
-    @project-select="selectProject"
-    :selected-section="selectedSection"
-    :section-projects="sectionProjects"
-    :projects="projects"
-    :selected-project="selectedProject"
-  />
+  <div class="app-container">
+    <Header 
+      @select-section="selectSection"
+      @select-cv="selectCV"
+      :selected-cv="selectedCv"
+    />
+    <SectionSelector 
+      v-if="!selectedCv"
+      @section-select="selectSection"
+      @project-select="selectProject"
+      :selected-section="selectedSection"
+      :selected-project="selectedProject"
+    />
+    <MainPage
+      :selected-section="selectedSection"
+      :section-projects="sectionProjects"
+      :projects="projects"
+      :selected-project="selectedProject"
+      :selected-cv="selectedCv"
+      @project-select="selectProject"
+    />
+  </div>
 </template>
 
 <script>
 import Header from './components/header/main.vue';
 import MainPage from './components/main-page/main.vue';
+import SectionSelector from './components/section-selector/main.vue';
+import projectSchema from './components/main-page/components/sections-container/components/section-view/components/section/data/project-schema';
 
 export default {
   name: 'App',
 
   components: {
     Header,
-    MainPage
+    MainPage,
+    SectionSelector
   },
 
   data() {
@@ -29,7 +43,8 @@ export default {
           selectedSection: "",
           projects: [],
           sectionProjects: [],
-          selectedProject: {}
+          selectedProject: {},
+          selectedCv: false
       }
   },
 
@@ -38,13 +53,26 @@ export default {
   },
 
   methods: {
+      selectCV(status) {
+        this.selectedCv = status;
+      },
+
       selectSection(section) {
+          this.selectedCv = false;
           this.selectedSection = section;
           this.selectedProject = null;
 
           this.sectionProjects = this.projects.filter(project => {
-            console.log(project.type, this.selectedSection);
               return project.type === this.selectedSection;
+          })
+
+          this.sectionProjects = this.sectionProjects.map(project => {
+            
+            let schemaProject = projectSchema.find(schema => {
+              return schema.id === project.id
+            });
+
+            return {...project, ...schemaProject}
           })
       },
 
@@ -56,9 +84,21 @@ export default {
 
             this.sectionProjects = this.projects.filter(project => {
               return project.type === this.selectedSection;
-          })
+            })
+
+            this.sectionProjects = this.sectionProjects.map(project => {
+            
+              let schemaProject = projectSchema.find(schema => {
+                return schema.id === project.id
+              });
+
+              return {...project, ...schemaProject}
+            })
+            
+            this.selectedProject = this.sectionProjects.find(project => project.id === this.selectedProject.id);
           }
-      },
+
+        },
 
       setAllProjects() {
           let illustrations = require.context(
@@ -75,18 +115,17 @@ export default {
 
           this.projects = this.projects.map(project => {
               return {
-                  type: project.substring(0, project.lastIndexOf('_')),
-                  img: project
+                  type: project.substring(0, project.lastIndexOf('_')).split('_')[1],
+                  img: project,
+                  id: project.split('_')[0]
               }
           })
-
-          console.log(this.projects);
       }
   }
 }
 </script>
 
-<style>
+<style lang="less">
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;600;700&display=swap');
 
 #app {

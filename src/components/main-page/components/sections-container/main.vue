@@ -1,9 +1,5 @@
 <template>
     <div class="sections-container">
-        <section-selector 
-            @section-select="$emit('section-select', $event)"
-            :selected-section="selectedSection"
-        />
         <section-view 
             v-if="selectedSection"
             @section-select="$emit('section-select', $event)"
@@ -16,14 +12,12 @@
 </template>
 
 <script>
-import SectionSelector from './components/section-selector/main.vue';
 import SectionView from './components/section-view/main.vue';
 
     export default {
         name: "SectionsContainer",
 
         components: {
-            SectionSelector,
             SectionView
         },
 
@@ -57,7 +51,9 @@ import SectionView from './components/section-view/main.vue';
 .sections-container {
     display: flex;
     flex-direction: row;
-    position: relative;
+    position: sticky;
+    top: 220px;
+    z-index: 20;
 }
 
 </style>
