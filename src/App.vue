@@ -1,25 +1,37 @@
 <template>
   <div class="app-container">
-    <Header 
-      @select-section="selectSection"
-      @select-cv="selectCV"
-      :selected-cv="selectedCv"
-    />
-    <SectionSelector 
-      v-if="!selectedCv"
-      @section-select="selectSection"
-      @project-select="selectProject"
-      :selected-section="selectedSection"
-      :selected-project="selectedProject"
-    />
-    <MainPage
-      :selected-section="selectedSection"
-      :section-projects="sectionProjects"
-      :projects="projects"
-      :selected-project="selectedProject"
-      :selected-cv="selectedCv"
-      @project-select="selectProject"
-    />
+    <div v-if="pageFullyLoaded">
+      <div
+          v-if="!gifAnimationDone"
+          class="loading-animation-container">
+      </div>
+
+      <div class="app-content"
+         :class="{'show-content': gifAnimationDone}"
+        >
+        <Header 
+          @select-section="selectSection"
+          @select-cv="selectCV"
+          :selected-cv="selectedCv"
+        />
+        <SectionSelector 
+          v-if="!selectedCv"
+          @section-select="selectSection"
+          @project-select="selectProject"
+          :selected-section="selectedSection"
+          :selected-project="selectedProject"
+        />
+        <MainPage
+          :selected-section="selectedSection"
+          :section-projects="sectionProjects"
+          :projects="projects"
+          :selected-project="selectedProject"
+          :selected-cv="selectedCv"
+          @project-select="selectProject"
+        />
+        <Footer />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -28,6 +40,7 @@ import Header from './components/header/main.vue';
 import MainPage from './components/main-page/main.vue';
 import SectionSelector from './components/section-selector/main.vue';
 import projectSchema from './components/main-page/components/sections-container/components/section-view/components/section/data/project-schema';
+import Footer from './components/footer/main.vue';
 
 export default {
   name: 'App',
@@ -35,7 +48,8 @@ export default {
   components: {
     Header,
     MainPage,
-    SectionSelector
+    SectionSelector,
+    Footer
   },
 
   data() {
@@ -44,12 +58,26 @@ export default {
           projects: [],
           sectionProjects: [],
           selectedProject: {},
-          selectedCv: false
+          selectedCv: false,
+          gifAnimationDone: false,
+          pageFullyLoaded: false
       }
   },
 
   created() {
       this.setAllProjects();
+  },
+
+  mounted() {
+    document.onreadystatechange = () => {
+      if (document.readyState === "complete") {
+        this.pageFullyLoaded = true;
+
+        setTimeout(() => {
+          this.gifAnimationDone = true;
+        }, 4030);
+      }
+    }
   },
 
   methods: {
@@ -148,5 +176,24 @@ body {
     outline: 0;
     text-decoration: none;
     list-style: none;
+}
+
+.loading-animation-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  background: url("@/assets/animation/opening-animation.gif") no-repeat center;
+  background-size: cover;
+}
+
+.app-content {
+  opacity: 0;
+  transition: opacity 1s ease;
+
+  &.show-content {
+    opacity: 1;
+  }
 }
 </style>

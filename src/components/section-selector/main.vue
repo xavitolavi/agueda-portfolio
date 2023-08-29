@@ -9,12 +9,12 @@
         class="portfolio-section" @click="selectSection(section.type)">
         <span> {{ section.name }}</span>
       </div>
-      <div v-if="selectedSection || selectedProject" class="back-button">
+      <div v-if="selectedSection || selectedProject" class="back-button" @click="handleBack">
         <svg class="arrow-icon" width="24" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M5.83398 5.83331L14.1673 14.1666" stroke="black" stroke-linejoin="round" />
           <path d="M14.1673 5.83331V14.1666H5.83398" stroke="black" stroke-linecap="square" stroke-linejoin="round" />
         </svg>
-        <span class="button" @click="handleBack"> {{ getButtonText }} </span>
+        <span class="button"> {{ getButtonText }} </span>
       </div>
     </div>
   </div>
@@ -112,11 +112,12 @@ export default {
     margin-left: 60px;
     text-align: justify;
     width: max-content;
-
+    
     .portfolio-section {
       width: max-content;
       cursor: pointer;
       text-transform: uppercase;
+      transition: .1s all ease-in-out;
     }
 
     .portfolio-section:hover {
@@ -126,6 +127,7 @@ export default {
     .portfolio-section.selected {
       font-weight: bold;
       text-decoration: line-through;
+      transition: .1s all ease-in-out;
     }
 
     .back-button {
@@ -137,27 +139,23 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
+      transition: .05s all ease-in-out;
 
       .arrow-icon {
-        margin-left: -5px;
-        margin-bottom: 2px;
         transform: rotate(180deg);
         display: none;
-        cursor: pointer;
       }
 
       .button {
+        padding-top: 3px;
         font-style: italic;
         text-transform: uppercase;
       }
-
       
-      .button:hover {
+      &:hover {
         cursor: pointer;
         font-weight: bold;
-      }
 
-      &:hover {
         .arrow-icon {
           display: block;
         }

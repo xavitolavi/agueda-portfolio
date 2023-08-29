@@ -1,7 +1,7 @@
 <template>
   <div class="volver-project-container" v-if="selectedProject">
     <div class="media">
-      <img :src="require('@/assets/images_lower/' + selectedProject.img)" alt="Volver a ser yo video" class="video">
+      <iframe class="video" src="https://www.youtube.com/embed/o8LDH94pgVA?si=q2gKbobohulSR8aI&amp;controls=0&amp;controls=0&amp;autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       <img :src="require('@/assets/3.volver/portada.jpg')" alt="Volver a ser yo image" class="image">
     </div>
     <div class="volver-text">
@@ -36,9 +36,8 @@
 <style lang="less">
 .volver-project-container {
     box-sizing: border-box;
-    padding-left: 20rem;
+    padding: 0 15vw;
     max-width: 100%;
-    padding-right: 20rem;
 
     .media {
       display: flex;

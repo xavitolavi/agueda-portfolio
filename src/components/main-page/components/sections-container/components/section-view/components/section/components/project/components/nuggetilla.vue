@@ -1,8 +1,10 @@
 <template>
   <div class="nuggetilla-project-container" v-if="selectedProject">
-      <div class="nuggetilla-main">
-        <img :src="require('@/assets/images_lower/' + selectedProject.img)" :alt="selectedProject.img">
-        <span>What began as a pastime during the global pandemic has evolved into a beautiful project dedicated to capturing the memories of special moments,
+    <div class="nuggetilla-main">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/dCwn-MtEUgU?si=cphB9Qp3nRTL-0IQ&amp;controls=0&amp;autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+        <span class="text">What began as a pastime during the global pandemic has evolved into a beautiful project dedicated to capturing the memories of special moments,
            cherished friendships, and meaningful places through personalized digital illustrations.</span>
       </div>
       <div class="nuggetilla-slider">
@@ -64,25 +66,34 @@
 
 <style lang="less">
 .nuggetilla-project-container {
-    box-sizing: border-box;
-    padding-left: 20rem;
-
+    max-height: max-content;
+    padding: 0 15vw;
+    margin-bottom: 5rem;
+    
     .nuggetilla-main {
-      display: flex;
-      flex-direction: row;
       gap: 2rem;
-      margin-right: 10rem;
-      flex-wrap: wrap;
+      display: flex;
       
-      img {
-        flex: 50%;
-        max-width: 60%;
+      .video-wrapper {
+        position: relative;
+        padding-bottom: 45%;
+        width: 100%;
+        height: 90%;
       }
-
-      span {
-        flex: 30%;
-        text-align: justify;
+  
+      .video-wrapper iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+      
+      .text {
+        flex: 40%;
+        display: flex;
         align-self: flex-end;
+        text-align: start;
       }
     }
 
@@ -103,7 +114,7 @@
         flex-direction: column;
 
         img {
-          width: 40rem;
+          width: 34rem;
           margin-right: 20px;
         }
     }

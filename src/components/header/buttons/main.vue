@@ -85,10 +85,11 @@ export default {
     flex-direction: row;
     height: 24px;
     color: #2c3e50;
-
+    
     .button-text {
         cursor: pointer;
         text-transform: uppercase;
+        transition: .1s all ease-in-out;
     }
 
     .icon {

@@ -12,7 +12,12 @@
           make every visit to the website an immersion into the unique atmosphere, culinary delights and history of La Bodegueta.
         </span>
       </div>
-      <img :src="require('@/assets/2.bodegueta/frame_captures.jpg')" alt="Frame Captures">
+      <div class="video-wrapper">
+        <iframe src="https://www.youtube.com/embed/-9W9v5gr24c?si=qKVLrEm56F002OiD&amp;controls=0&amp;autoplay=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+      <div class="video-wrapper">
+        <iframe src="https://www.youtube.com/embed/Ml0NHehC8CE?si=nD-EBE4FyxgVVnRi&amp;controls=0&amp;autoplay=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
       <img :src="require('@/assets/2.bodegueta/frame_captures.jpg')" alt="Frame Captures">
       <div class="small-illustrations">
         <img :src="require('@/assets/2.bodegueta/1.png')" alt="Frame Captures">
@@ -41,11 +46,26 @@
 <style lang="less">
 .bodegueta-project-container {
     max-height: max-content;
-    padding-left: 20rem;
-    padding-right: 20rem;
+    padding: 0 20rem;
+    margin-bottom: 5rem;
 
     img {
         width: 100%;
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      margin-bottom: 2rem;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
     }
 
     .bodegueta-text {
@@ -56,19 +76,20 @@
 
       span {
         text-align: justify;
+        width: 50%;
       }
 
     }
 
     .small-illustrations {
+      margin-top: 1rem;
       display: flex;
       flex-direction: row;
-      gap: 3rem;
       align-items: center;
       max-width: 100%;
       
       img {
-        width: 100%;
+        width: 25%;
         height: 100%;
       }
     }
