@@ -1,15 +1,32 @@
 <template>
   <div class="section-selector-container">
-    <div class="description">
-      Hi! My name is <span>Agueda Gol.</span> I'm an <span>illustrator,<br> UX-UI designer, and video editor,
-      </span> based in<br> <span>Spain,</span> and this is my portfolio <span>website! :)</span>
+    <div class="description desktop">
+      Hi! My name is <span>Agueda Gol.</span> I'm an <span>illustrator,<br class="mobile"> UX-UI designer, and video editor,
+      </span> based in<br class="mobile"> <span>Spain,</span> and this is my portfolio <span>website! :)</span>
+    </div>
+    <div v-if="!selectedSection" class="description mobile">
+      Hi! My name is <span>Agueda Gol.</span> I'm an <span>illustrator,<br class="mobile"> UX-UI designer, and video editor,
+      </span> based in<br class="mobile"> <span>Spain,</span> and this is my portfolio <span>website! :)</span>
+    </div>
+    <div v-if="selectedSection || selectedProject" class="mobile-actions">
+      <span class="mobile-title"> {{ getTitle }} </span>
+      <span @click="handleBack" class="back-button-mobile">{{ getBackButton }}</span>
     </div>
     <div class="section-selector">
-      <div v-for="section in sections" :key="'section_' + section.type" :class="sectionClasses(section.type)"
-        class="portfolio-section" @click="selectSection(section.type)">
+      <div 
+        v-for="section in sections" 
+        @click="selectSection(section.type)"
+        :key="'section_' + section.type"
+        :class="sectionClasses(section.type)"
+        class="portfolio-section" 
+      >
         <span> {{ section.name }}</span>
       </div>
-      <div v-if="selectedSection || selectedProject" class="back-button" @click="handleBack">
+      <div 
+        v-if="selectedSection || selectedProject" 
+        @click="handleBack"
+        class="back-button" 
+      >
         <svg class="arrow-icon" width="24" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M5.83398 5.83331L14.1673 14.1666" stroke="black" stroke-linejoin="round" />
           <path d="M14.1673 5.83331V14.1666H5.83398" stroke="black" stroke-linecap="square" stroke-linejoin="round" />
@@ -40,13 +57,18 @@ export default {
     },
   },
 
+  created() {
+    this.currentSection = this.selectedSection;
+  },
+
   data() {
     return {
       sections: [
         { type: "illustration", name: "illustration" },
         { type: "design", name: "ux/ui design" },
         { type: "video", name: "videography" }
-      ]
+      ],
+      currentSection: null
     }
   },
 
@@ -54,6 +76,26 @@ export default {
     getButtonText() {
       if (this.selectedSection && this.selectedProject) {
         return "Back";
+      }
+
+      if (this.selectedSection) {
+        return "All Projects";
+      }
+
+      return "";
+    },
+
+    getTitle() {
+      if (this.selectedProject) {
+        return this.selectedProject.title;
+      } else {
+        return this.selectedSection;
+      }
+    },
+
+    getBackButton() {
+      if (this.selectedSection && this.selectedProject) {
+        return "Go back";
       }
 
       if (this.selectedSection) {
@@ -75,7 +117,7 @@ export default {
 
     handleBack() {
       if (this.selectedProject) {
-        this.$emit('project-select', null)
+        this.$emit('project-select', null);
       } else {
         this.$emit('section-select', null)
       }
@@ -93,12 +135,23 @@ export default {
   z-index: 20;
   padding-bottom: 20px;
 
+  .mobile-actions {
+    display: none;
+  }
 
   .description {
     margin-left: 60px;
-    margin-top: 50px;
+    margin-top: 4rem;
     text-align: justify;
     color: rgba(0, 0, 0, .5);
+
+    &.desktop {
+      display: block;
+    }
+
+    &.mobile {
+      display: none;
+    }
 
     span {
       color: #000000;
@@ -108,11 +161,11 @@ export default {
   .section-selector {
     display: flex;
     flex-direction: column;
-    margin-top: 60px;
+    margin-top: 40px;
     margin-left: 60px;
     text-align: justify;
     width: max-content;
-    
+
     .portfolio-section {
       width: max-content;
       cursor: pointer;
@@ -134,7 +187,7 @@ export default {
       position: absolute;
       left: 0;
       bottom: 0;
-      margin-left: 20rem;
+      margin-left: 17rem;
       background: white;
       display: flex;
       align-items: center;
@@ -151,7 +204,7 @@ export default {
         font-style: italic;
         text-transform: uppercase;
       }
-      
+
       &:hover {
         cursor: pointer;
         font-weight: bold;
@@ -159,6 +212,68 @@ export default {
         .arrow-icon {
           display: block;
         }
+      }
+    }
+  }
+}
+
+@media (max-width: 1280px) {
+  .section-selector-container {
+    .section-selector {
+      .back-button {
+        margin-left: 13rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .section-selector-container {
+    .mobile-actions {
+      padding: 0 30px;
+      display: flex;
+      margin-top: 6rem;
+      justify-content: space-between;
+
+      .mobile-title {
+        text-transform: uppercase;
+        font-weight: 400;
+        font-size: 18px;
+      }
+
+      .back-button-mobile {
+        cursor: pointer;
+        text-decoration: underline;
+        font-style: italic;
+      }
+    }
+
+    .description {
+      text-align: center;
+      margin-left: 0;
+      padding: 0 40px;
+
+      &.desktop {
+        display: none;
+      }
+
+      &.mobile {
+        display: block;
+      }
+    }
+
+    .section-selector {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 450px) {
+  .section-selector-container {
+    .description {
+
+      .mobile {
+        display: none;
       }
     }
   }

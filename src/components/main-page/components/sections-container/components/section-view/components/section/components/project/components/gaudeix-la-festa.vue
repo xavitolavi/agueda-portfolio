@@ -1,10 +1,16 @@
 <template>
   <div class="gaudeix-project-container" v-if="selectedProject">
     <div class="video-wrapper">
-      <iframe src="https://www.youtube.com/embed/Y_-KgLO2QwM?si=6-k4GPGUF6TkFnJy&amp;controls=1&amp;controls=0&amp;autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;" allowfullscreen></iframe>
+      <video autoplay loop>
+        <source src="https://res.cloudinary.com/di6ki3nxv/video/upload/v1695309104/gaudeix-la-festa.mp4"
+          type="video/mp4; codecs=avc1.4d002a">
+      </video>
     </div>
     <div class="gaudeix-text">
-      <span>I had the pleasure of participating in the "Gaudeix la festa" initiative, promoted by the youth association Oliana Jove, aimed at creating a cultural and social program for the younger generations in this community. My role involved designing and conceptualizing the visual elements that accompany this campaign, paying close attention to both aesthetics and functionality.
+      <span>I had the pleasure of participating in the "Gaudeix la festa" initiative, promoted by the youth association
+        Oliana Jove, aimed at creating a cultural and social program for the younger generations in this community. My
+        role involved designing and conceptualizing the visual elements that accompany this campaign, paying close
+        attention to both aesthetics and functionality.
       </span>
     </div>
     <div class="gaudeix-fotos-1">
@@ -18,73 +24,95 @@
 </template>
 
 <script>
-  export default {
-    name: 'GaudeixLaFestaProject',
+export default {
+  name: 'GaudeixLaFestaProject',
 
-    props: {
-      selectedProject: {
-          type: Object,
-          default() {
-              return {};
-          }
+  props: {
+    selectedProject: {
+      type: Object,
+      default() {
+        return {};
       }
-    },
-  }
+    }
+  },
+}
 </script>
 
 <style lang="less">
 .gaudeix-project-container {
-    box-sizing: border-box;
-    padding-left: 20rem;
-    padding-right: 20rem;
-    margin-bottom: 5rem;
 
-    .video-wrapper {
-      position: relative;
-      padding-bottom: 56.25%;
-      height: 0;
+  .video-wrapper {
+    position: relative;
+    padding-bottom: 56.95%;
+    height: 0;
+  }
+
+  .video-wrapper video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+  }
+
+  .gaudeix-text {
+    display: flex;
+    margin: 2rem 0 2rem 0;
+    width: 50%;
+
+    span {
+      text-align: justify;
     }
 
-    .video-wrapper iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
+  }
 
+  .gaudeix-fotos-1 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    img {
+      width: 49%;
+    }
+  }
+
+  .gaudeix-fotos-2 {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: row-reverse;
+
+    img {
+      margin-left: 1.5rem;
+      width: 49%;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .gaudeix-project-container {
     .gaudeix-text {
-      display: flex;
-      margin: 2rem 0 2rem 0;
-      width: 50%;
-
-      span {
-        text-align: justify;
-      }
-
+      width: 100%;
     }
 
     .gaudeix-fotos-1 {
-      display: flex;
-      flex-direction: row;
-      gap: 1.5rem;
+      flex-direction: column;
+      align-items: center;
 
       img {
-        width: 50%;
-        flex: 50%;
+        margin-bottom: 2rem;
+        width: 100%;
       }
     }
 
     .gaudeix-fotos-2 {
-      display: flex;
-      flex-direction: row-reverse;
-      gap: 1.5rem;
+      margin: 0;
+      flex-direction: column;
+      align-items: center;
 
       img {
-        margin-left: 1.5rem;
-        width: 50%;
+        width: 100%;
+        margin: 0;
       }
     }
-
+  }
 }
 </style>

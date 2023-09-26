@@ -53,4 +53,33 @@ export default {
     }
   }
 }
+
+@media (max-width: 800px) {
+  
+  .all-projects-container {
+    padding: 30px;
+    
+    .images-container {
+      grid-gap: 1.5rem;
+
+      .image__item {
+        height: 450px;
+      }
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  
+  .all-projects-container {
+    padding: 30px;
+    
+    .images-container {
+
+      .image__item {
+        height: 250px;
+      }
+    }
+  }
+}
 </style>

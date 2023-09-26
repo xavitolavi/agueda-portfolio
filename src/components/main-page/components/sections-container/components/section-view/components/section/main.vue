@@ -1,34 +1,18 @@
 <template>
   <div class="selected-section-container">
-    <div 
-      v-if="!selectedProject" 
-      class="selected-section-slider" 
-      :class="grabActive" :ref="'slider'"
-      @dragstart="mouseDown" 
-      @dragend="mouseUp" 
-      @drag="mouseMove"
-    >
-      <div 
-        v-for="(project, index) in sectionProjects" 
-        :key="'section_project_' + index" 
-        class="project"
-      >
-        <img 
-          :src="require('@/assets/images_lower/' + project.img)" 
-          :alt="'section_project_' + index"
-          @click="handleClick(project)"
-        >
-        <span class="title">{{ project.title}}</span>
-        <span>{{ project.subtitle }}</span>
+    <div v-if="!selectedProject" class="selected-section-slider" :class="grabActive" :ref="'slider'"
+      @mousedown="mouseDown">
+      <div class="slider-container mobile" :style="leftSlider">
+        <div v-for="(project, index) in sectionProjects" :key="'section_project_' + index" class="project">
+          <img :src="require('@/assets/images_lower/' + project.img)" :alt="project.id">
+          <span class="title">{{ project.title }}</span>
+          <span>{{ project.subtitle }}</span>
+        </div>
       </div>
     </div>
     <div v-else class="selected-project">
-      <component 
-        :is="getComponent(selectedProject)"
-        :selected-project="selectedProject"
-        :ref="selectedProject.component + '_component'"
-        :key="selectedProject.id"
-      />
+      <component :is="getComponent(selectedProject)" :selected-project="selectedProject"
+        :ref="selectedProject.component + '_component'" :key="selectedProject.id" />
     </div>
   </div>
 </template>
@@ -44,6 +28,7 @@ import Cwork from './components/project/components/cwork.vue';
 import EnricGol from './components/project/components/enric-gol.vue';
 import Mediatics from './components/project/components/mediatics.vue';
 import ImDigital from './components/project/components/im-digital.vue';
+import SaLluna from './components/project/components/sa-lluna.vue';
 
 
 export default {
@@ -59,7 +44,8 @@ export default {
     Cwork,
     EnricGol,
     Mediatics,
-    ImDigital
+    ImDigital,
+    SaLluna
   },
 
   props: {
@@ -85,35 +71,63 @@ export default {
     }
   },
 
+  created() {
+    this.left = 0
+  },
+
   data() {
     return {
       isDown: false,
       startX: null,
       scrollLeft: null,
-      projects: []
+      projects: [],
+      left: 0,
+      lastPosition: 0,
+      sliderWidth: 0
     }
   },
 
   methods: {
     mouseDown(e) {
-      this.isDown = true;
-      this.startX = e.pageX - this.$refs['slider'].offsetLeft;
-      this.scrollLeft = this.$refs['slider'].scrollLeft;
-    },
+      e.preventDefault();
 
-    mouseUp() {
-      this.isDown = false;
-    },
+      this.start = performance.now();
+      this.drag = true;
+      this.startX = e.pageX;
 
-    mouseMove(e) {
-      if (!this.isDown) {
-        return;
+      this.lastPosition = e.pageX;
+
+      this._dragCallback = (e) => {
+        this.left = this.left - (this.lastPosition - e.pageX)
+        this.lastPosition = e.pageX;
+
+        if (this.selectedSection === 'illustration') {
+          if (this.left <= -3500) {
+            this.left = -3499;
+          }
+        } else {
+          if (this.left <= 0) {
+            this.left = 1;
+          }
+        }
+
+        if (this.left >= 0) {
+          this.left = -1;
+        }
       }
 
-      e.preventDefault();
-      const x = e.pageX - this.$refs['slider'].offsetLeft;
-      const walk = (x - this.startX) * 1.5; //scroll-fast
-      this.$refs['slider'].scrollLeft = this.scrollLeft - walk;
+      this._mouseUpCallback = () => {
+        if (performance.now() - this.start <= 100) {
+          if (e.target.__vnode.props.alt) {
+            this.handleClick(e.target.alt)
+          }
+        }
+        window.removeEventListener("mousemove", this._dragCallback);
+        window.removeEventListener("mouseup", this._mouseUpCallback);
+      }
+
+      window.addEventListener("mousemove", this._dragCallback);
+      window.addEventListener("mouseup", this._mouseUpCallback);
     },
 
     handleClick(project) {
@@ -122,6 +136,14 @@ export default {
 
     getComponent(project) {
       return project.component;
+    },
+    
+    handleBack() {
+      if (this.selectedProject) {
+        this.$emit('project-select', null);
+      } else {
+        this.$emit('section-select', null)
+      }
     }
   },
 
@@ -134,49 +156,122 @@ export default {
       return "";
     },
 
+    leftSlider() {
+      return `margin-left : ${this.left}px`
+    }
   }
 }
 </script>
 
 <style lang="less">
-.selected-section-slider {
-  display: flex;
-  flex-direction: row;
-  position: relative;
-  overflow-x: hidden;
-  overflow-y: hidden;
-  white-space: nowrap;
-  transition: all 0.2s;
-  will-change: transform;
-  user-select: none;
-  cursor: pointer;
-  padding-left: 20rem;
+.selected-section-container {
 
-  .project {
+  .mobile-actions {
+    display: none;
+  }
+
+  .selected-section-slider {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    white-space: nowrap;
+    transition: all 0.2s;
+    will-change: transform;
+    user-select: none;
+    cursor: pointer;
+    padding-left: 17rem;
 
-    img {
-      width: 40rem;
-      margin-right: 20px;
+    .slider-container {
+      display: flex;
+      flex-direction: row;
     }
 
-    span {
-      text-align: left;
-      text-transform: uppercase;
+    .project {
+      display: flex;
+      flex-direction: column;
+
+      img {
+        width: 40rem;
+        margin-right: 20px;
+      }
+
+      span {
+        text-align: left;
+        text-transform: uppercase;
+
+      }
+
+      .title {
+        font-weight: 600;
+      }
+    }
+  }
+
+  .selected-project {
+    max-height: max-content;
+    padding: 0 17rem;
+    margin-bottom: 5rem;
+
+  }
+
+  .selected-section-slider.active {
+    background: rgba(255, 255, 255, 0.3);
+    cursor: grabbing;
+    cursor: -webkit-grabbing;
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 1280px) {
+  .selected-section-container {
+
+    .selected-section-slider {
+      padding: 0 13rem;
 
     }
- 
-    .title {
-      font-weight: 600;
+
+    .selected-project {
+      max-height: max-content;
+      padding: 0 10rem 0 13rem;
+      margin-bottom: 5rem;
     }
   }
 }
 
-.selected-section-slider.active {
-  background: rgba(255, 255, 255, 0.3);
-  cursor: grabbing;
-  cursor: -webkit-grabbing;
-  transform: scale(1);
+@media (max-width: 768px) {
+  .selected-section-container {
+
+    .selected-section-slider {
+      padding: 0 30px;
+      .slider-container {
+        display: block;
+
+        &.mobile {
+          .project {
+            margin-bottom: 1rem;
+            width: 100%;
+
+            img {
+              width: 100%;
+            }
+          }
+
+          span {
+            display: none;
+          }
+        }
+      }
+    }
+
+
+    .selected-project {
+      max-height: max-content;
+      padding: 0 30px;
+      margin-bottom: 5rem;
+
+    }
+  }
 }
 </style>

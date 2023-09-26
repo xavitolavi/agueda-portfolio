@@ -1,35 +1,41 @@
 <template>
   <div class="app-container">
     <div v-if="pageFullyLoaded">
-      <div
-          v-if="!gifAnimationDone"
-          class="loading-animation-container">
+      <div v-if="!gifAnimationDone" class="loading-animation-container">
       </div>
-
-      <div class="app-content"
-         :class="{'show-content': gifAnimationDone}"
-        >
-        <Header 
+      <div v-else class="app-content" :class="{ 'show-content': gifAnimationDone }">
+        <Header
           @select-section="selectSection"
           @select-cv="selectCV"
+          @open-burger-menu="openBurgerMenu"
           :selected-cv="selectedCv"
+          :menu-open="menuOpen"
         />
-        <SectionSelector 
-          v-if="!selectedCv"
-          @section-select="selectSection"
-          @project-select="selectProject"
-          :selected-section="selectedSection"
-          :selected-project="selectedProject"
-        />
-        <MainPage
-          :selected-section="selectedSection"
-          :section-projects="sectionProjects"
-          :projects="projects"
-          :selected-project="selectedProject"
-          :selected-cv="selectedCv"
-          @project-select="selectProject"
-        />
-        <Footer />
+        <div v-if="menuOpen" class="mobile-menu">
+          <MobileMenu 
+            @select-section="selectSection"
+            @select-cv="selectCV"
+          />
+        </div>
+        <div v-else class="main">
+          <SectionSelector
+            v-if="!selectedCv"
+            @section-select="selectSection"
+            @project-select="selectProject"
+            :selected-section="selectedSection"
+            :selected-project="selectedProject"
+          />
+          <MainPage 
+            @section-select="selectSection"
+            @project-select="selectProject"
+            :selected-section="selectedSection"
+            :section-projects="sectionProjects"
+            :projects="projects"
+            :selected-project="selectedProject"
+            :selected-cv="selectedCv" 
+          />
+          <Footer />
+        </div>
       </div>
     </div>
   </div>
@@ -41,6 +47,7 @@ import MainPage from './components/main-page/main.vue';
 import SectionSelector from './components/section-selector/main.vue';
 import projectSchema from './components/main-page/components/sections-container/components/section-view/components/section/data/project-schema';
 import Footer from './components/footer/main.vue';
+import MobileMenu from './components/mobile-menu/main.vue';
 
 export default {
   name: 'App',
@@ -49,23 +56,25 @@ export default {
     Header,
     MainPage,
     SectionSelector,
-    Footer
+    Footer,
+    MobileMenu
   },
 
   data() {
-      return {
-          selectedSection: "",
-          projects: [],
-          sectionProjects: [],
-          selectedProject: {},
-          selectedCv: false,
-          gifAnimationDone: false,
-          pageFullyLoaded: false
-      }
+    return {
+      selectedSection: "",
+      projects: [],
+      sectionProjects: [],
+      selectedProject: {},
+      selectedCv: false,
+      gifAnimationDone: false,
+      pageFullyLoaded: false,
+      menuOpen: false
+    }
   },
 
   created() {
-      this.setAllProjects();
+    this.setAllProjects();
   },
 
   mounted() {
@@ -81,80 +90,81 @@ export default {
   },
 
   methods: {
-      selectCV(status) {
-        this.selectedCv = status;
-      },
+    selectCV(status) {
+      this.menuOpen = false;
+      this.selectedCv = status;
+    },
 
-      selectSection(section) {
-          this.selectedCv = false;
-          this.selectedSection = section;
-          this.selectedProject = null;
+    selectSection(section) {
+      this.menuOpen = false;
+      this.selectedCv = false;
+      this.selectedProject = null;
+      this.sectionManagement(section);
+    },
 
-          this.sectionProjects = this.projects.filter(project => {
-              return project.type === this.selectedSection;
-          })
+    selectProject(project) {
+      this.selectedProject = project;
+      this.menuOpen = false;
 
-          this.sectionProjects = this.sectionProjects.map(project => {
-            
-            let schemaProject = projectSchema.find(schema => {
-              return schema.id === project.id
-            });
-
-            return {...project, ...schemaProject}
-          })
-      },
-
-      selectProject(project) {
-          this.selectedProject = project;
-
-          if (project) {
-            this.selectedSection = project.type;
-
-            this.sectionProjects = this.projects.filter(project => {
-              return project.type === this.selectedSection;
-            })
-
-            this.sectionProjects = this.sectionProjects.map(project => {
-            
-              let schemaProject = projectSchema.find(schema => {
-                return schema.id === project.id
-              });
-
-              return {...project, ...schemaProject}
-            })
-            
-            this.selectedProject = this.sectionProjects.find(project => project.id === this.selectedProject.id);
-          }
-
-        },
-
-      setAllProjects() {
-          let illustrations = require.context(
-              '@/assets/images_lower',
-              true,
-              /^.*\.png$/
-          )
-
-          this.projects = illustrations.keys();
-
-          this.projects = this.projects.map(img => {
-              return img.replace('./', '');
-          })
-
-          this.projects = this.projects.map(project => {
-              return {
-                  type: project.substring(0, project.lastIndexOf('_')).split('_')[1],
-                  img: project,
-                  id: project.split('_')[0]
-              }
-          })
+      if (project) {
+        if (typeof project === 'object') {
+          this.sectionManagement(this.selectedProject.type)
+          this.selectedProject = this.sectionProjects.find(project => project.id === this.selectedProject.id);
+        } else {
+          this.selectedProject = projectSchema.find(p => p.id === project);
+          this.sectionManagement(this.selectedProject.type)
+        }
       }
+    },
+
+    sectionManagement(section) {
+      this.selectedSection = section;
+
+      this.sectionProjects = this.projects.filter(project => {
+        return project.type === this.selectedSection;
+      })
+
+      this.sectionProjects = this.sectionProjects.map(project => {
+
+        let schemaProject = projectSchema.find(schema => {
+          return schema.id === project.id
+        });
+
+        return { ...project, ...schemaProject }
+      })
+    },
+
+    setAllProjects() {
+      let illustrations = require.context(
+        '@/assets/images_lower',
+        true,
+        /^.*\.jpg$/
+      )
+
+      this.projects = illustrations.keys();
+
+      this.projects = this.projects.map(img => {
+        return img.replace('./', '');
+      })
+
+      this.projects = this.projects.map(project => {
+        return {
+          type: project.substring(0, project.lastIndexOf('_')).split('_')[1],
+          img: project,
+          id: project.split('_')[0]
+        }
+      })
+    },
+
+    openBurgerMenu(isOpen) {
+      this.menuOpen = isOpen;
+    },
   }
 }
 </script>
 
 <style lang="less">
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;600;700&display=swap');
 
 #app {
   font-family: Poppins, Helvetica, Arial, sans-serif;
@@ -165,24 +175,30 @@ export default {
   height: 100%;
 }
 
+html {
+  position: relative;
+  min-height: 100%;
+}
+
 body {
   display: block;
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    outline: 0;
-    text-decoration: none;
-    list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  text-decoration: none;
+  list-style: none;
 }
 
 .loading-animation-container {
+  z-index: 50;
   position: absolute;
   top: 0;
   left: 0;
-  height: 100vh;
+  height: 100%;
   width: 100%;
   background: url("@/assets/animation/opening-animation.gif") no-repeat center;
   background-size: cover;
@@ -194,6 +210,15 @@ body {
 
   &.show-content {
     opacity: 1;
+  }
+
+  .mobile-menu {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #141414;
   }
 }
 </style>
