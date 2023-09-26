@@ -63,7 +63,7 @@ export default {
       grid-gap: 1.5rem;
 
       .image__item {
-        height: 450px;
+        height: 340px;
       }
     }
   }

@@ -9,6 +9,17 @@
         :section-projects="sectionProjects" :selected-project="selectedProject" />
       <all-projects v-if="!selectedSection" @project-select="$emit('project-select', $event)" :projects="projects" />
     </div>
+    <div @click="goUp" class="button-container">
+      <div class="go-up-button">
+        <span class="up">UP</span>
+        <div class="up-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9.23608 9.23608L22.4305 22.4305" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M22.4305 9.23608V22.4305H9.23608" stroke="white" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -59,21 +70,58 @@ export default {
       type: Boolean,
       default: false
     }
+  },
+
+  methods: {
+    goUp() {
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    }
   }
 }
 </script>
 
 <style lang="less">
-.main-container {
-  margin-top: 270px;
-  position: sticky;
-  background: white;
-  z-index: 10;
+.main-page {
+
+  .main-container {
+    margin-top: 270px;
+    position: sticky;
+    background: white;
+    z-index: 10;
+  }
+
+  .go-up-button {
+    display: none;
+  }
 }
 
 @media (max-width: 650px) {
-  .main-container {
-    margin-top: 200px;
+  .main-page {
+
+    .main-container {
+      margin-top: 225px;
+    }
+
+    .button-container {
+      padding: 0 30px;
+      display: flex;
+      justify-content: flex-end;
+
+      .go-up-button {
+        font-size: 18px;
+        color: white;
+        display: flex;
+        background-color: #141414;
+        width: fit-content;
+        margin: 4rem 0;
+        padding: 2rem 1.7rem 2rem 2rem;
+  
+        .up-icon {
+          margin-left: .5rem;
+          transform: rotate(180deg);
+        }
+      }
+    }
   }
 }
 </style>

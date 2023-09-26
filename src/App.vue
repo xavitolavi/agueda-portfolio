@@ -91,11 +91,13 @@ export default {
 
   methods: {
     selectCV(status) {
+      window.scrollTo(0,0);
       this.menuOpen = false;
       this.selectedCv = status;
     },
 
     selectSection(section) {
+      window.scrollTo(0,0);
       this.menuOpen = false;
       this.selectedCv = false;
       this.selectedProject = null;
@@ -103,6 +105,7 @@ export default {
     },
 
     selectProject(project) {
+      window.scrollTo(0,0);
       this.selectedProject = project;
       this.menuOpen = false;
 
