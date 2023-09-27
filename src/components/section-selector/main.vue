@@ -261,6 +261,8 @@ export default {
         text-transform: uppercase;
         font-weight: 400;
         font-size: 18px;
+        text-align: start;
+        width: 70%;
       }
 
       .back-button-mobile {
@@ -274,6 +276,7 @@ export default {
       text-align: center;
       margin-left: 0;
       padding: 0 40px;
+      font-size: .9rem;
 
       &.desktop {
         display: none;

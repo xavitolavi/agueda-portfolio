@@ -56,7 +56,7 @@ export default {
   computed: {
     footerClasses() {
       let classes = []; 
-      if (!this.selectedProject && this.selectedSection) {
+      if (!this.selectedProject && this.selectedSection || (this.selectedProject.component === 'champagne' || this.selectedProject.component === 'regal-jan')) {
         classes.push("yea");
       }
 

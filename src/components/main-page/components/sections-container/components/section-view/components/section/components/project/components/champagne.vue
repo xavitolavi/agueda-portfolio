@@ -1,6 +1,9 @@
 <template>
   <div class="champagne-project-container" v-if="selectedProject">
     <div class="content">
+      <span class="mobile-champagne">Design and illustration of the cover of the book "Champagne en vasos de plástico", an exciting youth road trip
+        that narrates the adventures of a group of teens as they explore the most authentic and deepest Spain.
+      </span>
       <div class="media">
         <img :src="require('@/assets/5.champagne/champagne_img.jpg')" alt="Champagne">
         <div class="right">
@@ -12,8 +15,9 @@
           </div>
         </div>
       </div>
-      <span>Design and illustration of the cover of the book "Champagne en vasos de plástico", an exciting youth road trip
-        that narrates the adventures of a group of teens as they explore the most authentic and deepest Spain.</span>
+      <span class="desktop-champagne">Design and illustration of the cover of the book "Champagne en vasos de plástico", an exciting youth road trip
+        that narrates the adventures of a group of teens as they explore the most authentic and deepest Spain.
+      </span>
     </div>
   </div>
 </template>
@@ -41,6 +45,10 @@ export default {
     gap: 1.5rem;
     flex-wrap: wrap;
 
+    .mobile-champagne {
+      display: none;
+    }
+
     .media {
       display: flex;
       flex-direction: row;
@@ -59,7 +67,6 @@ export default {
       .video-wrapper {
         display: block;
         position: relative;
-        padding-bottom: 60%;
         height: 100%;
       }
 
@@ -98,22 +105,40 @@ export default {
     .content {
       flex-direction: column;
 
+      .mobile-champagne {
+        display: block;
+        margin-bottom: 1rem;
+      }
+
       .media {
         flex-direction: column;
         width: 100%;
 
         img {
-          width: 100%;
+          display: none;
         }
 
         .right{
-          display: none;
+          position: relative;
+          width: 100%;
+
+          .video-wrapper {
+            padding-bottom: 0;
+
+            video {
+              position: relative;
+            }
+          }
         }
       }
 
       span {
         margin-top: 2rem;
         width: 100%;
+      }
+
+      .desktop-champagne {
+        display: none;
       }
     }
   }

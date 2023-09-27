@@ -14,7 +14,7 @@
         but also enhances the authenticity of this tavern.
       </span>
       <div class="video-wrapper mobile">
-        <video controls autoplay loop>
+        <video autoplay loop>
           <source src="https://res.cloudinary.com/di6ki3nxv/video/upload/v1695309104/bodegueta-carta.mp4" type="video/mp4; codecs=avc1.4d002a">
         </video>
       </div>

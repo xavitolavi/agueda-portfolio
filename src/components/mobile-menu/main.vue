@@ -81,6 +81,10 @@ export default {
 
   .section {
     margin-bottom: 2rem;
+
+    &:active {
+      font-weight: bold;
+    }
   }
 
   .menu-actions {

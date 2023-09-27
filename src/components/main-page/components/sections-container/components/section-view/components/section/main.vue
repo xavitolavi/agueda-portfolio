@@ -19,7 +19,7 @@
         </div>
       </div>
     </div>
-    <div v-else class="selected-project">
+    <div v-else class="selected-project" :class="sliderContainer">
       <component 
         :is="getComponent(selectedProject)" 
         :selected-project="selectedProject"
@@ -182,6 +182,14 @@ export default {
 
     isVideo() {
       return this.selectedSection === 'video';
+    },
+
+    sliderContainer() {
+      if (this.selectedProject.component === 'nuggetilla' || this.selectedProject.component === 'enric-gol') {
+        return "sliderino";
+      }
+
+      return "";
     }
   }
 }
@@ -238,6 +246,9 @@ export default {
     padding: 0 17rem;
     margin-bottom: 5rem;
 
+    &.sliderino {
+      padding: 0;
+    }
   }
 
   .selected-section-slider.active {
@@ -272,6 +283,7 @@ export default {
 
     .selected-section-slider {
       padding: 0 30px;
+
       .slider-container {
         display: block;
 
@@ -297,7 +309,7 @@ export default {
       max-height: max-content;
       padding: 0 30px;
       margin-bottom: 5rem;
-
+      font-size: .9rem;
     }
   }
 }

@@ -2,7 +2,7 @@
   <div class="nuggetilla-project-container" v-if="selectedProject">
     <div class="nuggetilla-main">
       <div class="video-wrapper">
-        <video controls autoplay loop>
+        <video autoplay loop>
           <source src="https://res.cloudinary.com/di6ki3nxv/video/upload/v1695309104/nuggetilla-video-hd.mp4"
             type="video/mp4; codecs=avc1.4d002a">
         </video>
@@ -79,8 +79,8 @@ export default {
         this.left = this.left - (this.lastPosition - e.pageX)
         this.lastPosition = e.pageX;
 
-        if (this.left <= -2000) {
-          this.left = -1999;
+        if (this.left <= -1700) {
+          this.left = -1699;
         }
 
         if (this.left >= 0) {
@@ -121,6 +121,7 @@ export default {
   .nuggetilla-main {
     gap: 2rem;
     display: flex;
+    padding: 0 17rem;
 
     .video-wrapper {
       position: relative;
@@ -156,8 +157,10 @@ export default {
     will-change: transform;
     user-select: none;
     cursor: pointer;
+    padding-left: 17rem;
 
     .nuggetilla-slider {
+      
       margin-bottom: 1rem;
       display: flex;
       flex-direction: row;
@@ -182,12 +185,25 @@ export default {
   }
 }
 
+@media (max-width: 1280px) {
+  .nuggetilla-project-container {
+    .nuggetilla-main {
+      padding: 0 13rem;
+    }
+
+    .nuggetilla-slider-container {
+      padding-left: 13rem;
+    }
+  }
+}
+
 @media (max-width: 768px) {
   .nuggetilla-project-container {
     .nuggetilla-main {
       gap: 2rem;
       display: flex;
       flex-direction: column;
+      padding: 0 30px;
 
       .video-wrapper {
         position: relative;
@@ -214,7 +230,8 @@ export default {
 
     .nuggetilla-slider-container {
       display: block;
-
+      padding: 0;
+      
       .nuggetilla-slider {
         justify-items: center;
         display: grid;

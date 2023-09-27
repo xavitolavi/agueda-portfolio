@@ -39,7 +39,6 @@
           />
           <Footer 
             v-if="!selectedSection"
-            :is-video="isVideo"
           />
         </div>
       </div>
