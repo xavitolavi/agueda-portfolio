@@ -34,7 +34,6 @@
     </div>
     <div class="social-actions">
       <a href="https://www.instagram.com/nuggetilla/">INSTAGRAM</a>
-      <a href="https://www.linkedin.com/in/%C3%A0gueda-gol-617349177/">LINKEDIN</a>
     </div>
   </div>
 </template>
@@ -101,7 +100,6 @@ export default {
     margin-top: 8rem;
 
     a {
-      margin-right: 2rem;
       font-size: 16px;
     }
   }
