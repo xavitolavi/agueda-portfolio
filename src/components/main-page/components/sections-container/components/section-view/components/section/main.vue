@@ -1,9 +1,18 @@
 <template>
-  <div class="selected-section-container">
-    <div v-if="!selectedProject" class="selected-section-slider" :class="grabActive" :ref="'slider'"
-      @mousedown="mouseDown">
+  <div class="selected-section-container" :class="{'is-video' : isVideo}">
+    <div 
+      v-if="!selectedProject" 
+      class="selected-section-slider" 
+      :class="grabActive" 
+      :ref="'slider'"
+      @mousedown="mouseDown"
+    >
       <div class="slider-container mobile" :style="leftSlider">
-        <div v-for="(project, index) in sectionProjects" :key="'section_project_' + index" class="project">
+        <div 
+          v-for="(project, index) in sectionProjects" 
+          :key="'section_project_' + index" 
+          class="project"
+        >
           <img :src="require('@/assets/images_lower/' + project.img)" :alt="project.id">
           <span class="title">{{ project.title }}</span>
           <span>{{ project.subtitle }}</span>
@@ -11,8 +20,13 @@
       </div>
     </div>
     <div v-else class="selected-project">
-      <component :is="getComponent(selectedProject)" :selected-project="selectedProject"
-        :ref="selectedProject.component + '_component'" :key="selectedProject.id" />
+      <component 
+        :is="getComponent(selectedProject)" 
+        :selected-project="selectedProject"
+        :ref="selectedProject.component + '_component'" 
+        :key="selectedProject.id"
+        :is-video="isVideo"
+      />
     </div>
   </div>
 </template>
@@ -87,6 +101,12 @@ export default {
     }
   },
 
+  watch: {
+    selectedSection() {
+      this.left = 0;
+    }
+  },
+
   methods: {
     mouseDown(e) {
       e.preventDefault();
@@ -96,7 +116,7 @@ export default {
       this.startX = e.pageX;
 
       this.lastPosition = e.pageX;
-
+      
       this._dragCallback = (e) => {
         this.left = this.left - (this.lastPosition - e.pageX)
         this.lastPosition = e.pageX;
@@ -106,8 +126,8 @@ export default {
             this.left = -3499;
           }
         } else {
-          if (this.left <= 0) {
-            this.left = 1;
+          if (this.left <= -600) {
+            this.left = -599;
           }
         }
 
@@ -158,6 +178,10 @@ export default {
 
     leftSlider() {
       return `margin-left : ${this.left}px`
+    },
+
+    isVideo() {
+      return this.selectedSection === 'video';
     }
   }
 }
@@ -230,6 +254,9 @@ export default {
     .selected-section-slider {
       padding: 0 13rem;
 
+      .project img { 
+        width: 35rem;
+      }
     }
 
     .selected-project {

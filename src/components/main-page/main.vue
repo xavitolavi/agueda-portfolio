@@ -4,21 +4,18 @@
       <curriculum-view />
     </div>
     <div v-else class="main-container">
-      <sections-container @section-select="$emit('section-select', $event)"
-        @project-select="$emit('project-select', $event)" :selected-section="selectedSection"
-        :section-projects="sectionProjects" :selected-project="selectedProject" />
-      <all-projects v-if="!selectedSection" @project-select="$emit('project-select', $event)" :projects="projects" />
-    </div>
-    <div @click="goUp" class="button-container">
-      <div class="go-up-button">
-        <span class="up">UP</span>
-        <div class="up-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M9.23608 9.23608L22.4305 22.4305" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
-            <path d="M22.4305 9.23608V22.4305H9.23608" stroke="white" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="round"/>
-          </svg>
-        </div>
-      </div>
+      <sections-container 
+        @section-select="$emit('section-select', $event)"
+        @project-select="$emit('project-select', $event)" 
+        :selected-section="selectedSection"
+        :section-projects="sectionProjects" 
+        :selected-project="selectedProject"
+        :is-video="isVideo"
+      />
+      <all-projects v-if="!selectedSection" 
+        @project-select="$emit('project-select', $event)" 
+        :projects="projects"
+      />
     </div>
   </div>
 </template>
@@ -69,12 +66,11 @@ export default {
     selectedCv: {
       type: Boolean,
       default: false
-    }
-  },
+    },
 
-  methods: {
-    goUp() {
-      window.scrollTo({top: 0, behavior: 'smooth'});
+    isVideo: {
+      type: Boolean,
+      default: false
     }
   }
 }
@@ -84,7 +80,7 @@ export default {
 .main-page {
 
   .main-container {
-    margin-top: 270px;
+    margin-top: 295px;
     position: sticky;
     background: white;
     z-index: 10;

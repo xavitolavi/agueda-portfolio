@@ -6,7 +6,8 @@
 			@project-select="$emit('project-select', $event)"
 			:selected-section="selectedSection"
 			:section-projects="sectionProjects" 
-			:selected-project="selectedProject" 
+			:selected-project="selectedProject"
+			:is-video="isVideo"
 		/>
 	</div>
 </template>
@@ -42,6 +43,11 @@ export default {
 				return {};
 			}
 		},
+
+		isVideo: {
+			type: Boolean,
+			default: false
+		}
 	}
 }
 </script>

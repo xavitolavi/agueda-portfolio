@@ -10,6 +10,7 @@
           @open-burger-menu="openBurgerMenu"
           :selected-cv="selectedCv"
           :menu-open="menuOpen"
+          :is-video="isVideo"
         />
         <div v-if="menuOpen" class="mobile-menu">
           <MobileMenu 
@@ -24,6 +25,7 @@
             @project-select="selectProject"
             :selected-section="selectedSection"
             :selected-project="selectedProject"
+            :is-video="isVideo"
           />
           <MainPage 
             @section-select="selectSection"
@@ -32,9 +34,13 @@
             :section-projects="sectionProjects"
             :projects="projects"
             :selected-project="selectedProject"
-            :selected-cv="selectedCv" 
+            :selected-cv="selectedCv"
+            :is-video="isVideo"
           />
-          <Footer />
+          <Footer 
+            v-if="!selectedSection"
+            :is-video="isVideo"
+          />
         </div>
       </div>
     </div>
@@ -86,6 +92,20 @@ export default {
           this.gifAnimationDone = true;
         }, 4030);
       }
+    }
+  },
+
+  computed: {
+    isVideo() {
+      let root = document.documentElement;
+
+      if (this.selectedSection === 'video') {
+        root.classList.add('is-video');
+      } else {
+        root.classList.remove('is-video');
+      }
+
+      return this.selectedSection === 'video';
     }
   },
 
@@ -181,6 +201,10 @@ export default {
 html {
   position: relative;
   min-height: 100%;
+
+  &.is-video {
+    background-color: #141414;
+  }
 }
 
 body {

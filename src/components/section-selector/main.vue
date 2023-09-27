@@ -1,5 +1,5 @@
 <template>
-  <div class="section-selector-container">
+  <div class="section-selector-container" :class="{'is-video' : isVideo}">
     <div class="description desktop">
       Hi! My name is <span>Agueda Gol.</span> I'm an <span>illustrator,<br class="mobile"> UX-UI designer, and video editor,
       </span> based in<br class="mobile"> <span>Spain,</span> and this is my portfolio <span>website! :)</span>
@@ -55,6 +55,11 @@ export default {
         return null;
       }
     },
+
+    isVideo: {
+      type: Boolean,
+      default: false
+    }
   },
 
   created() {
@@ -134,6 +139,23 @@ export default {
   background: white;
   z-index: 20;
   padding-bottom: 20px;
+
+  &.is-video {
+    background-color: #141414;
+    color: white;
+
+    .description {
+      color: white;
+
+      span {
+        color: grey;
+      }
+    }
+
+    .section-selector .back-button {
+      background-color: #141414;
+    }
+  }
 
   .mobile-actions {
     display: none;

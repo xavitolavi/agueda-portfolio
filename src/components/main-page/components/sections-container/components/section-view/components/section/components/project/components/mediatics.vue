@@ -1,5 +1,5 @@
 <template>
-  <div class="mediatics-project-container" v-if="selectedProject">
+  <div class="mediatics-project-container" v-if="selectedProject" :class="{'is-video' : isVideo}">
     <div class="video-wrapper">
       <video controls autoplay>
         <source src="https://res.cloudinary.com/di6ki3nxv/video/upload/v1695309104/MEDIATICS.mp4" type="video/mp4; codecs=avc1.4d002a">
@@ -23,6 +23,11 @@
           default() {
               return {};
           }
+      },
+
+      isVideo: {
+        type: Boolean,
+        default: false
       }
     },
   }
@@ -35,6 +40,10 @@
 
 .mediatics-project-container {
 
+  &.is-video {
+    color: white;
+  }
+  
     .video-wrapper {
       position: relative;
       padding-bottom: 56.25%;

@@ -79,8 +79,8 @@ export default {
         this.left = this.left - (this.lastPosition - e.pageX)
         this.lastPosition = e.pageX;
 
-        if (this.left <= -3000) {
-          this.left = -2999;
+        if (this.left <= -2000) {
+          this.left = -1999;
         }
 
         if (this.left >= 0) {

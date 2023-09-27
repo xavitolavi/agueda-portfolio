@@ -1,5 +1,5 @@
 <template>
-  <div class="digital-project-container" v-if="selectedProject">
+  <div class="digital-project-container" v-if="selectedProject" :class="{'is-video' : isVideo}">
     <div class="video-wrapper">
       <iframe src="https://www.youtube.com/embed/-BtcUnrJ3Rw?si=hxIaNous5vsbCeUH&amp;controls=1&amp;autoplay=1"
         frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -63,6 +63,11 @@ export default {
       default() {
         return {};
       }
+    },
+
+    isVideo: {
+      type: Boolean,
+      default: false
     }
   },
 }
@@ -70,6 +75,10 @@ export default {
 
 <style lang="less">
 .digital-project-container {
+
+  &.is-video {
+    color: white;
+  }
 
   .video-wrapper {
     position: relative;

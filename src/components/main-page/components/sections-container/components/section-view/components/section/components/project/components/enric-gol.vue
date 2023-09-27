@@ -109,8 +109,8 @@ export default {
         this.left = this.left - (this.lastPosition - e.pageX)
         this.lastPosition = e.pageX;
 
-        if (this.left <= -2800) {
-          this.left = -2799;
+        if (this.left <= -1500) {
+          this.left = -1499;
         }
 
         if (this.left >= 0) {
@@ -213,6 +213,19 @@ export default {
       width: 32.2%;
     }
   }
+}
+
+@media (max-width: 1280px) {
+  .enric-project-container {
+    .enric-slider-container {
+      .illustration {
+        img {
+          width: 20rem;
+        }
+      }
+    }
+  }
+  
 }
 
 @media (max-width: 768px) {

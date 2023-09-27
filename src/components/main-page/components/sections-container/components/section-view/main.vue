@@ -6,19 +6,23 @@
         @section-select="$emit('section-select', $event)" 
         :selected-section="selectedSection"
         :section-projects="sectionProjects" 
-        :selected-project="selectedProject" />
+        :selected-project="selectedProject"
+      />
     </div>
+    <Footer :is-video="isVideo" :class="footerClasses"/>
   </div>
 </template>
 
 <script>
 import CurrentSection from './components/section/main.vue';
+import Footer from '../../../../../footer/main.vue';
 
 export default {
   name: "SectionView",
 
   components: {
-    CurrentSection
+    CurrentSection,
+    Footer
   },
 
   props: {
@@ -42,7 +46,27 @@ export default {
         return {};
       }
     },
+
+    isVideo: {
+      type: Boolean,
+      default: false
+    }
   },
+
+  computed: {
+    footerClasses() {
+      let classes = []; 
+      if (!this.selectedProject && this.selectedSection) {
+        classes.push("yea");
+      }
+
+      if (this.isVideo) {
+        classes.push("is-video"); 
+      }
+
+      return classes;
+    }
+  }
 
 }
 </script>
