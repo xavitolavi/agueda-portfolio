@@ -33,7 +33,7 @@
       </div>
     </div>
     <div class="social-actions">
-      <a href="https://www.instagram.com/nuggetilla/">INSTAGRAM</a>
+      <a href="https://www.linkedin.com/in/%C3%A0gueda-gol-617349177/">LINKEDIN</a>
     </div>
   </div>
 </template>
@@ -93,6 +93,10 @@ export default {
       display: flex;
       justify-content: center;
       text-align: end;
+
+      &:active {
+        font-weight: bold;
+      }
     }
   }
 
@@ -101,6 +105,10 @@ export default {
 
     a {
       font-size: 16px;
+
+      &:active {
+        font-weight: bold;
+      }
     }
   }
 }
