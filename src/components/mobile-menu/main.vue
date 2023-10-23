@@ -21,7 +21,7 @@
         </div>
       </div>
       <div class="action">
-        <a href="mailto:name@rapidtables.com?subject=The%20subject%20of%20the%20mail">
+        <a href="mailto:gol.agueda@gmail.com?subject=Hey!%20Let's%20talk!">
           <span class="button-text">CONTACT</span>
           <div class="icon">
             <svg width="36" height="36" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -73,7 +73,8 @@ export default {
   font-size: 24px;
   text-transform: uppercase;
   color: #fff;
-
+  background-color: #141414;
+  
   a {
     color: #fff;
   }

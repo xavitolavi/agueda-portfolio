@@ -80,7 +80,7 @@ export default {
 .main-page {
 
   .main-container {
-    margin-top: 295px;
+    margin-top: 225px;
     position: sticky;
     background: white;
     z-index: 10;

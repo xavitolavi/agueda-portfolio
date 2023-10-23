@@ -10,7 +10,7 @@
 			</div>
 		</div>
 		<div v-else class="contact-button header-button__item">
-			<a href="mailto:name@rapidtables.com?subject=The%20subject%20of%20the%20mail">
+			<a href="mailto:gol.agueda@gmail.com?subject=Hey!%20Let's%20talk!">
 				<span class="button-text">{{ text }}</span>
 				<div class="icon">
 					<svg width="24" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

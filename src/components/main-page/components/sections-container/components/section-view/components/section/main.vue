@@ -26,6 +26,7 @@
         :ref="selectedProject.component + '_component'" 
         :key="selectedProject.id"
         :is-video="isVideo"
+        :is-mobile="isMobile"
       />
     </div>
   </div>
@@ -97,13 +98,20 @@ export default {
       projects: [],
       left: 0,
       lastPosition: 0,
-      sliderWidth: 0
+      sliderWidth: 0,
+      windowWidth: window.innerWidth
     }
   },
 
   watch: {
     selectedSection() {
       this.left = 0;
+    }
+  },
+
+  mounted() {
+    window.onresize = () => {
+      this.windowWidth = innerWidth;
     }
   },
 
@@ -138,7 +146,7 @@ export default {
 
       this._mouseUpCallback = () => {
         if (performance.now() - this.start <= 100) {
-          if (e.target.__vnode.props.alt) {
+          if (e.target.alt) {
             this.handleClick(e.target.alt)
           }
         }
@@ -181,7 +189,7 @@ export default {
     },
 
     isVideo() {
-      return this.selectedSection === 'video';
+      return false;
     },
 
     sliderContainer() {
@@ -190,6 +198,10 @@ export default {
       }
 
       return "";
+    },
+
+    isMobile() {
+      return this.windowWidth < 768;
     }
   }
 }
@@ -213,7 +225,7 @@ export default {
     will-change: transform;
     user-select: none;
     cursor: pointer;
-    padding-left: 17rem;
+    padding-left: 22rem;
 
     .slider-container {
       display: flex;
@@ -243,7 +255,7 @@ export default {
 
   .selected-project {
     max-height: max-content;
-    padding: 0 17rem;
+    padding: 0 22rem;
     margin-bottom: 5rem;
 
     &.sliderino {
@@ -256,6 +268,25 @@ export default {
     cursor: grabbing;
     cursor: -webkit-grabbing;
     transform: scale(1);
+  }
+}
+
+@media (min-width: 1500px) {
+  .selected-section-container {
+
+    .selected-section-slider {
+      padding-left: 30rem;
+
+      .project {
+        img {
+          width: 48rem;
+        }
+      }
+    }
+
+    .selected-project {
+      padding: 0 30rem;
+    }
   }
 }
 
@@ -309,7 +340,6 @@ export default {
       max-height: max-content;
       padding: 0 30px;
       margin-bottom: 5rem;
-      font-size: .9rem;
     }
   }
 }

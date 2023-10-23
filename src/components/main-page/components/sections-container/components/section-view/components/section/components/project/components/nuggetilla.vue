@@ -2,7 +2,7 @@
   <div class="nuggetilla-project-container" v-if="selectedProject">
     <div class="nuggetilla-main">
       <div class="video-wrapper">
-        <video autoplay loop>
+        <video :autoplay="!isMobile" loop :controls="isMobile">
           <source src="https://res.cloudinary.com/di6ki3nxv/video/upload/v1695309104/nuggetilla-video-hd.mp4"
             type="video/mp4; codecs=avc1.4d002a">
         </video>
@@ -31,6 +31,11 @@ export default {
       default() {
         return {};
       }
+    },
+
+    isMobile: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -121,7 +126,7 @@ export default {
   .nuggetilla-main {
     gap: 2rem;
     display: flex;
-    padding: 0 17rem;
+    padding: 0 22rem;
 
     .video-wrapper {
       position: relative;
@@ -157,7 +162,7 @@ export default {
     will-change: transform;
     user-select: none;
     cursor: pointer;
-    padding-left: 17rem;
+    padding-left: 22rem;
 
     .nuggetilla-slider {
       
@@ -175,6 +180,19 @@ export default {
     }
   }
 
+}
+
+@media (min-width: 1500px) {
+  .nuggetilla-project-container {
+
+    .nuggetilla-main {
+      padding: 0 30rem;
+    }
+
+    .nuggetilla-slider-container {
+      padding-left: 30rem;
+    }
+  }
 }
 
 @media (max-width: 1440px) {

@@ -1,7 +1,8 @@
 <template>
   <div class="app-container">
     <div v-if="pageFullyLoaded">
-      <div v-if="!gifAnimationDone" class="loading-animation-container">
+      <div v-if="!gifAnimationDone" class="loading-animation-container" @click="gifAnimationDone = true">
+        <span class="tap">Tap to continue</span>
       </div>
       <div v-else class="app-content" :class="{ 'show-content': gifAnimationDone }">
         <Header
@@ -96,15 +97,7 @@ export default {
 
   computed: {
     isVideo() {
-      let root = document.documentElement;
-
-      if (this.selectedSection === 'video') {
-        root.classList.add('is-video');
-      } else {
-        root.classList.remove('is-video');
-      }
-
-      return this.selectedSection === 'video';
+      return false;
     }
   },
 
@@ -200,10 +193,7 @@ export default {
 html {
   position: relative;
   min-height: 100%;
-
-  &.is-video {
-    background-color: #141414;
-  }
+  font-size: 14px;
 }
 
 body {
@@ -228,6 +218,18 @@ body {
   width: 100%;
   background: url("@/assets/animation/opening-animation.gif") no-repeat center;
   background-size: cover;
+  cursor: pointer;
+
+  .tap {
+    text-transform: uppercase;
+    font-size: 16px;
+    color: grey;
+    display: block;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    padding-bottom: 20px;
+  }
 }
 
 .app-content {

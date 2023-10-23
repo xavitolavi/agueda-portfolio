@@ -2,11 +2,11 @@
   <div class="section-selector-container" :class="{'is-video' : isVideo}">
     <div class="description desktop">
       Hi! My name is <span>Agueda Gol.</span> I'm an <span>illustrator,<br class="mobile"> UX-UI designer, and video editor,
-      </span> based in<br class="mobile"> <span>Spain,</span> and this is my portfolio <span>website! :)</span>
+      </span> based in<br class="mobile"> <span>Spain,</span> and this is my portfolio <span>website!</span>
     </div>
     <div v-if="!selectedSection" class="description mobile">
       Hi! My name is <span>Agueda Gol.</span> I'm an <span>illustrator,<br class="mobile"> UX-UI designer, and video editor,
-      </span> based in<br class="mobile"> <span>Spain,</span> and this is my portfolio <span>website! :)</span>
+      </span> based in<br class="mobile"> <span>Spain,</span> and this is my portfolio <span>website!</span>
     </div>
     <div v-if="selectedSection" class="mobile-actions">
       <span class="mobile-title"> {{ getTitle }} </span>
@@ -163,7 +163,7 @@ export default {
 
   .description {
     margin-left: 60px;
-    margin-top: 4rem;
+    margin-top: 1.5rem;
     text-align: justify;
     color: rgba(0, 0, 0, .5);
 
@@ -183,7 +183,7 @@ export default {
   .section-selector {
     display: flex;
     flex-direction: column;
-    margin-top: 40px;
+    margin-top: 1.5rem;
     margin-left: 60px;
     text-align: justify;
     width: max-content;
@@ -209,7 +209,7 @@ export default {
       position: absolute;
       left: 0;
       bottom: 0;
-      margin-left: 17rem;
+      margin-left: 22rem;
       background: white;
       display: flex;
       align-items: center;
@@ -234,6 +234,16 @@ export default {
         .arrow-icon {
           display: block;
         }
+      }
+    }
+  }
+}
+
+@media (min-width: 1500px) {
+  .section-selector-container {
+    .section-selector {
+      .back-button {
+        margin-left: 30rem;
       }
     }
   }
@@ -276,13 +286,13 @@ export default {
       text-align: center;
       margin-left: 0;
       padding: 0 40px;
-      font-size: .9rem;
 
       &.desktop {
         display: none;
       }
 
       &.mobile {
+        padding-top: 2rem;
         display: block;
       }
     }

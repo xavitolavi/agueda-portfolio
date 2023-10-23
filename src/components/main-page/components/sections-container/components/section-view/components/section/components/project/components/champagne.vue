@@ -8,7 +8,7 @@
         <img :src="require('@/assets/5.champagne/champagne_img.jpg')" alt="Champagne">
         <div class="right">
           <div class="video-wrapper">
-            <video autoplay loop muted>
+            <video :autoplay="!isMobile" loop muted :controls="isMobile">
               <source src="https://res.cloudinary.com/di6ki3nxv/video/upload/v1695490638/champagne_2_rtms51.mp4"
                 type="video/mp4; codecs=avc1.4d002a">
             </video>
@@ -32,6 +32,11 @@ export default {
       default() {
         return {};
       }
+    },
+
+    isMobile: {
+      type: Boolean,
+      default: false
     }
   },
 }

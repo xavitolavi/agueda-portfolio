@@ -1,7 +1,7 @@
 <template>
   <div class="cwork-project-container" v-if="selectedProject">
     <div class="video-wrapper">
-      <video autoplay loop>
+      <video :autoplay="!isMobile" loop :controls="isMobile">
         <source src="https://res.cloudinary.com/di6ki3nxv/video/upload/v1695309104/cwork.mp4"
           type="video/mp4; codecs=avc1.4d002a">
       </video>
@@ -14,7 +14,7 @@
         from their homes.
       </span>
       <div class="video-wrapper mobile">
-        <video autoplay loop>
+        <video :autoplay="!isMobile" loop :controls="isMobile">
           <source src="https://res.cloudinary.com/di6ki3nxv/video/upload/v1695309104/lower-cwork-scroll.mp4"
             type="video/mp4; codecs=avc1.4d002a">
         </video>
@@ -62,6 +62,11 @@ export default {
       default() {
         return {};
       }
+    },
+
+    isMobile: {
+      type: Boolean,
+      default: false
     }
   },
 }
@@ -121,17 +126,18 @@ export default {
     .video-wrapper {
       position: relative;
       padding-bottom: 60%;
-      height: 100%;
+      height: 90%;
     }
 
     .video-wrapper video {
       position: absolute;
-      top: 0;
+      top: 5%;
       left: 0;
       height: 100%;
     }
 
     .right {
+      height: 90%;
       width: 50%;
     }
   }

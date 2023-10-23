@@ -2,7 +2,7 @@
   <div class="enric-project-container" v-if="selectedProject">
     <div class="enric-top-container">
       <div class="video-wrapper">
-        <video autoplay loop>
+        <video :autoplay="!isMobile" loop :controls="isMobile">
           <source src="https://res.cloudinary.com/di6ki3nxv/video/upload/v1695309104/enric-gol.mp4"
             type="video/mp4; codecs=avc1.4d002a">
         </video>
@@ -94,6 +94,11 @@ export default {
       default() {
         return {};
       }
+    },
+
+    isMobile: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -163,25 +168,25 @@ export default {
 .enric-project-container {
 
   .enric-top-container {
-    padding: 0 17rem;
+    padding: 0 22rem;
 
     .video-wrapper {
-    position: relative;
-    padding-bottom: 64.8%;
-    height: 0;
-  }
+      position: relative;
+      padding-bottom: 64.8%;
+      height: 0;
+    }
 
-  .video-wrapper video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-  }
+    .video-wrapper video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+    }
 
-  .main-text {
-    margin: 2rem 0;
-    text-align: justify;
-  }
+    .main-text {
+      margin: 2rem 0;
+      text-align: justify;
+    }
   }
   
 
@@ -196,7 +201,7 @@ export default {
     will-change: transform;
     user-select: none;
     cursor: pointer;
-    padding-left: 17rem;
+    padding-left: 22rem;
 
     .enric-slider {
       display: flex;
@@ -215,7 +220,7 @@ export default {
   }
 
   .enric-bottom-container {
-    padding: 0 17rem;
+    padding: 0 22rem;
 
     .secondary-text {
       margin: 2rem 0;
@@ -233,6 +238,7 @@ export default {
 
     .portraits {
       display: flex;
+      gap: 1rem;
       flex-direction: row;
       justify-content: space-between;
       
@@ -241,13 +247,31 @@ export default {
 
         img {
           height: 100%;
-          width: 95%;
+          width: 100%;
         }
 
         &:last-child {
           display: none;
         }
       }
+    }
+  }
+}
+
+@media (min-width: 1500px) {
+  .enric-project-container {
+
+    .enric-top-container {
+      padding: 0 30rem;
+
+    }
+
+    .enric-slider-container {
+      padding-left: 30rem;
+    }
+
+    .enric-bottom-container {
+      padding: 0 30rem;
     }
   }
 }
@@ -333,11 +357,16 @@ export default {
         .portrait {
           width: 100%;
           text-align: -webkit-center;
+          
+          &:last-child {
+            display: block;
+          }
         }
 
         img {
           width: 100%;
         }
+
       }
     }    
   }

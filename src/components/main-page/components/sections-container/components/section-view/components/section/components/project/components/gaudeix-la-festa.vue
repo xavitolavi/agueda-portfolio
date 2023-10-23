@@ -1,7 +1,7 @@
 <template>
   <div class="gaudeix-project-container" v-if="selectedProject">
     <div class="video-wrapper">
-      <video autoplay loop>
+      <video :autoplay="!isMobile" loop :controls="isMobile">
         <source src="https://res.cloudinary.com/di6ki3nxv/video/upload/v1695309104/gaudeix-la-festa.mp4"
           type="video/mp4; codecs=avc1.4d002a">
       </video>
@@ -33,6 +33,11 @@ export default {
       default() {
         return {};
       }
+    },
+
+    isMobile: {
+      type: Boolean,
+      default: false
     }
   },
 }

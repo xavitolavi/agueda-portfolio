@@ -50,7 +50,7 @@
   position: relative;
   bottom: 0;
   z-index: 30;
-  font-size: .8rem;
+  font-size: .9rem;
 
   .go-up-button {
     display: none;
@@ -71,6 +71,12 @@
     hr {
       border: 1px solid rgb(105, 105, 105);
     }
+  }
+}
+
+@media (min-width: 1500px) {
+  .footer-container {
+    position: absolute;
   }
 }
 
